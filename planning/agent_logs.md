@@ -93,7 +93,7 @@ Transcript excerpt (selection):
   ```
 - Example used to export GEMINI key (user provided):
   ```bash
-  export GEMINI_API_KEY="AIzaSyB4gixe223hkVSVe2UApGUbUOg8i3pAETg"
+  export GEMINI_API_KEY="api_key"
   ```
 
 
