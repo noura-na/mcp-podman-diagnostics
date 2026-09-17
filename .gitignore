@@ -1,0 +1,106 @@
+# =========================
+# Python
+# =========================
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# =========================
+# IDEs & Editors
+# =========================
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# =========================
+# Testing
+# =========================
+
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# =========================
+# Type checking
+# =========================
+
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# =========================
+# Jupyter Notebook
+# =========================
+
+.ipynb_checkpoints/
+
+# =========================
+# OS generated files
+# =========================
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# =========================
+# Logs
+# =========================
+
+*.log
+
+# =========================
+# Local databases
+# =========================
+
+*.sqlite3
+*.db
+
+# =========================
+# Secrets
+# =========================
+
+*.pem
+*.key
+secrets.json

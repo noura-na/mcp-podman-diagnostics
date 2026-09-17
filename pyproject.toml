@@ -1,0 +1,13 @@
+[project]
+name = "fastmcp-podman"
+version = "0.1.0"
+description = "FastMCP Podman diagnostics"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp",
+    "google-genai>=2.24.0",
+    "google-generativeai>=0.8.6",
+]
+
+[project.scripts]
+podman-diagnostics = "server:main"
