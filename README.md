@@ -18,24 +18,19 @@ source .venv/bin/activate
 # 2. Install dependencies
 uv add fastmcp google-genai google-generativeai python-dotenv requests
 
-# Option A — run the CLI directly (no pip install required)
+# ==========================================
+# Option A — Run the script directly
+# ==========================================
 python3 server.py --demo
-
-# 4. Run the FastMCP server for VS Code MCP integration (stdio)
 python3 server.py --mcp
-
-# 5. Diagnose a live container by name or id
 python3 server.py --container test-crash
 
-# Option B — (optional) install as an editable package using pip
-# If you prefer installing the console script, run:
+# ==========================================
+# Option B — Install as a CLI package
+# ==========================================
 # pip install -e .
-# then you can run: podman-diagnostics --demo
-
-# 4. Run the FastMCP server for VS Code MCP integration (stdio)
+# podman-diagnostics --demo
 # podman-diagnostics --mcp
-
-# 5. Diagnose a live container by name or id
 # podman-diagnostics --container test-crash
 ```
 
@@ -48,6 +43,38 @@ GEMINI_API_KEY=your_key_here
 GEMINI_MODEL=gemini-3.6-flash
 ```
 
+## VS Code MCP Integration
+
+To use this tool directly inside VS Code's AI chat, you must configure your MCP settings (usually found in `.vscode/mcp.json` or your extension's settings). 
+
+Because VS Code extension hosts run in the background, they do not inherit your terminal's Python environment or Homebrew paths. You **must use absolute paths** to your `.venv` and `server.py` file, and explicitly provide the macOS system `PATH` so the script can locate the `podman` CLI.
+
+Add this block to your MCP configuration:
+
+```json
+{
+    "servers": {
+        "mcp-podman-diagnostics": {
+            "type": "stdio",
+            "command": "/ABSOLUTE/PATH/TO/YOUR/PROJECT/.venv/bin/python3",
+            "args": [
+                "/ABSOLUTE/PATH/TO/YOUR/PROJECT/server.py",
+                "--mcp"
+            ],
+            "env": {
+                "GEMINI_API_KEY": "your_api_key_here",
+                "GEMINI_MODEL": "gemini-3.6-flash",
+                "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+            }
+        }
+    }
+}
+```
+
+*Replace `/ABSOLUTE/PATH/TO/YOUR/PROJECT/` with the actual path to your repository.*
+
+Once saved, reload your VS Code window (`Cmd + Shift + P` -> **Developer: Reload Window**). The tool will now be fully clickable and accessible to your chat assistant.
+
 ## Trade-offs & Simplifications
 To keep this project focused and completable within the 2-hour window, I made the following architectural choices:
 * **Native CLI over Containerization:** I chose to package this as an installable Python CLI rather than a container. Running this tool *inside* a container would require the user to mount their host's Podman socket (`-v /run/user/1000/podman/podman.sock:/run/podman.sock`), which adds significant friction to the testing experience.
@@ -56,7 +83,7 @@ To keep this project focused and completable within the 2-hour window, I made th
 ## AI Tooling & Handoff
 This project was built using an AI coding agent. All architectural decisions, task breakdowns, and agent handoff artifacts are preserved in the `planning/` directory.
 
-## Example test container
+## Example Test Container
 
 ```bash
 # Start a small test container that emits logs then raises an error
@@ -69,14 +96,11 @@ podman logs --tail 200 test-crash
 # Use the CLI to run diagnostics (uses LLM if configured; otherwise offline fallback)
 python3 server.py --container test-crash
 
-# or, after installing the package:
-podman-diagnostics --container test-crash
-
 # Clean up
 podman rm -f test-crash
 ```
 
-Notes:
+**Notes:**
 - `podman ps` shows only running containers; use `podman ps -a` to list stopped ones.
 - If LLM diagnostics are desired, ensure `GEMINI_API_KEY` is exported or in `.env`.
-- Use `--demo` to run an offline example without Podman: `podman-diagnostics --demo`.
+- Use `--demo` to run an offline example without Podman: `python3 server.py --demo`.
