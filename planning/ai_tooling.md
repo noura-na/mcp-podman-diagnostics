@@ -4,7 +4,7 @@
 **Primary LLM Used:** [e.g., GPT-5 mini]
 
 ### Workflow summary
-- **Planning:** Used [Agent/Model] to generate the initial `architecture.md` and `todo.md` to establish strict boundaries for the build.
+- **Planning:** Used GPT-5 mini to generate the initial `architecture.md` and `todo.md` to establish strict boundaries for the build.
 - **Implementation:** Used the agent to generate the FastMCP server boilerplate, the `subprocess` wrappers for Podman, and the LLM API integration.
 - **Debugging:** Relied on the agent to troubleshoot a `null` output bug caused by a missing `return` statement after updating the `google-genai` SDK logic.
 
