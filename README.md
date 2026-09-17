@@ -1,4 +1,4 @@
-# mcp-podman-diagnostics
+# podman-diagnostics
 
 A FastMCP server and CLI tool designed to fetch local Podman container logs and produce LLM-based root-cause diagnostics within seconds. 
 
@@ -44,3 +44,27 @@ To keep this project focused and completable within the 2-hour window, I made th
 
 ## AI Tooling & Handoff
 This project was built using an AI coding agent. All architectural decisions, task breakdowns, and agent handoff artifacts are preserved in the `planning/` directory.
+
+## Example test container
+
+```bash
+# Start a small test container that emits logs then raises an error
+podman pull python:3.11-alpine
+podman run -d --name test-crash python:3.11-alpine sh -c "echo 'App starting...'; sleep 1; python -c 'raise ConnectionRefusedError(\"could not connect\")'"
+
+# View logs (works for running or stopped containers)
+podman logs --tail 200 test-crash
+
+# Use the CLI to run diagnostics (uses LLM if configured; otherwise offline fallback)
+python3 server.py --container test-crash
+# or, after installing the package:
+podman-diagnostics --container test-crash
+
+# Clean up
+podman rm -f test-crash
+```
+
+Notes:
+- `podman ps` shows only running containers; use `podman ps -a` to list stopped ones.
+- If LLM diagnostics are desired, ensure `GEMINI_API_KEY` is exported or in `.env`.
+- Use `--demo` to run an offline example without Podman: `podman-diagnostics --demo`.
