@@ -76,7 +76,8 @@ Add this block to your MCP configuration:
 Once saved, reload your VS Code window (`Cmd + Shift + P` -> **Developer: Reload Window**). The tool will now be fully clickable and accessible to your chat assistant.
 
 ## Trade-offs & Simplifications
-To keep this project focused and completable within the 2-hour window, I made the following architectural choices:
+To keep this project focused, I made the following architectural choices:
+
 * **Native CLI over Containerization:** I chose to package this as an installable Python CLI rather than a container. Running this tool *inside* a container would require the user to mount their host's Podman socket (`-v /run/user/1000/podman/podman.sock:/run/podman.sock`), which adds significant friction to the testing experience.
 * **Graceful Degradation:** If the Gemini API fails or is unconfigured, the tool gracefully returns a sanitized raw log output rather than forcing a heavy local LLM dependency (like Ollama). 
 
