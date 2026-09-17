@@ -21,16 +21,22 @@ uv add fastmcp google-genai google-generativeai python-dotenv requests
 # Option A — run the CLI directly (no pip install required)
 python3 server.py --demo
 
+# 4. Run the FastMCP server for VS Code MCP integration (stdio)
+python3 server.py --mcp
+
+# 5. Diagnose a live container by name or id
+python3 server.py --container test-crash
+
 # Option B — (optional) install as an editable package using pip
 # If you prefer installing the console script, run:
 # pip install -e .
 # then you can run: podman-diagnostics --demo
 
 # 4. Run the FastMCP server for VS Code MCP integration (stdio)
-podman-diagnostics --mcp
+# podman-diagnostics --mcp
 
 # 5. Diagnose a live container by name or id
-podman-diagnostics --container test-crash
+# podman-diagnostics --container test-crash
 ```
 
 ## Environment Config
@@ -62,6 +68,7 @@ podman logs --tail 200 test-crash
 
 # Use the CLI to run diagnostics (uses LLM if configured; otherwise offline fallback)
 python3 server.py --container test-crash
+
 # or, after installing the package:
 podman-diagnostics --container test-crash
 
