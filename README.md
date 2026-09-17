@@ -15,11 +15,16 @@ A FastMCP server and CLI tool designed to fetch local Podman container logs and 
 python3 -m venv .venv
 source .venv/bin/activate
 
-# 2. Install the CLI
-pip install -e .
+# 2. Install dependencies
+uv add fastmcp google-genai google-generativeai python-dotenv requests
 
-# 3. Verify it works instantly (No API keys or containers required)
-podman-diagnostics --demo
+# Option A — run the CLI directly (no pip install required)
+python3 server.py --demo
+
+# Option B — (optional) install as an editable package using pip
+# If you prefer installing the console script, run:
+# pip install -e .
+# then you can run: podman-diagnostics --demo
 
 # 4. Run the FastMCP server for VS Code MCP integration (stdio)
 podman-diagnostics --mcp
