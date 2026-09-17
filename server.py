@@ -165,7 +165,8 @@ def get_container_logs(container_id: str, tail: int = 500) -> Dict[str, Any]:
     cmd = ["podman", "logs", "--tail", str(int(tail)), container_id]
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        raw = proc.stdout or ""
+        raw = (proc.stdout or "").strip() + "\n" + (proc.stderr or "").strip()
+        
         sanitized = _sanitize_logs(raw)
         return {
             "container_id": container_id,
