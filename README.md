@@ -1,4 +1,4 @@
-# podman-diagnostics
+# mcp-podman-diagnostics
 
 A FastMCP server and CLI tool designed to fetch local Podman container logs and produce LLM-based root-cause diagnostics within seconds. 
 
